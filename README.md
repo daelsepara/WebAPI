@@ -70,3 +70,15 @@ _**Additional Note:**_ requires basic authentication (refer to the credentials a
 **HTTP 401 Unauthorized**: if username/password is incorrect or if the call is not authenticated.
 
 **HTTP 404 Not found**: if the record does not exist in the database.
+
+# Testing
+
+Open the solution file: ![PrescriptionsApp.sln](/PrescriptionsApp.sln) provided in Visual Studio 2015/2017 then Run the Debug/Release version. Visual Studio runs IISExpress on a separate browser window. Take note of the URL, e.g. http://localhost:port.
+
+To create GET/POST/DELETE/PUT requests you can use the free version of the Postman software downloadable at: ![https://www.getpostman.com/](https://www.getpostman.com/) 
+
+# Dependencies
+
+Uses Newtonsoft Json library to serialize objects into a JSON string.
+
+# Deployment
