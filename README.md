@@ -8,8 +8,8 @@ The calls operate on the records inside the _Prescriptions_ table.
 
 Returns a list of all prescriptions, available in the database.
 
-Input: <empty>
-Output: Array<Prescription>
+Input: *<empty>*
+Output: Array*<Prescription>*
 
 Returns an HTTP 404 status code if no records are available
 
