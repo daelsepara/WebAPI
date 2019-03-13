@@ -2,9 +2,11 @@
 
 This is a sample project for demonstrating Web APIs. The REST service implemented in C# and responds to **GET**/**POST**/**PUT**/**DELETE** request calls on a single endpoint (_~/prescriptions_). An MySQL server with a database and table named **Prescriptions** is required. To create the table structure, please refer to the .sql file provided: ![migrations.sql](/migrations/migrations.sql)
 
-The calls operate on the records inside the _Prescriptions_ table. REST calls to the endpoint responds with an **HTTP 200 OK** status code upon success. Different status codes are returned when an error is encountered. The input, output, and return codes are listed below.
+The calls operate on the records inside the _Prescriptions_ table. REST calls to the endpoint responds with an **HTTP 200 OK** status code upon success. Different status codes are returned when an error is encountered.
 
 On rest calls that require authentication, use the following credentials: username: **_test_**, password: _**test123**_
+
+The input requirements and output of the REST calls as well as the response codes (on error) are listed below.
 
 ## GET ~/prescriptions/ ##
 Returns a list of all prescriptions, available in the database.
