@@ -73,7 +73,7 @@ _**Additional Note:**_ requires basic authentication (refer to the credentials a
 
 # Testing
 
-Open the solution file: ![PrescriptionsApp.sln](/PrescriptionsApp.sln) provided in Visual Studio 2015/2017 then modify the connection string in the ![prescriptionsController.cs](/PrescriptionsApp/Controllers/prescriptionsController.cs) and modify the **{username}** and **{password}** placeholders in the code:
+Open the solution file: ![PrescriptionsApp.sln](/PrescriptionsApp.sln) provided in Visual Studio 2015/2017 then modify the connection string in the ![prescriptionsController.cs](/PrescriptionsApp/Controllers/prescriptionsController.cs) file and modify the **{username}** and **{password}** placeholders in the code:
 
 ```C#
 readonly string connectionString = "server=127.0.0.1;uid={username};pwd={password};database=Prescriptions";
@@ -81,10 +81,12 @@ readonly string connectionString = "server=127.0.0.1;uid={username};pwd={passwor
 
 Run the Debug/Release version. Visual Studio runs IISExpress on a separate browser window. Take note of the URL, e.g. http://localhost:port. Use the URL provided and make request calls to the /prescriptions end point, e.g. http://localhost:port/prescriptions
 
-To create GET/POST/DELETE/PUT requests you can use the free version of the Postman software downloadable at: [https://www.getpostman.com/](https://www.getpostman.com/) 
+To create GET/POST/DELETE/PUT requests (with/without authentication), you can use the free version of the Postman software downloadable at: [https://www.getpostman.com/](https://www.getpostman.com/) 
 
 # Dependencies
 
-Uses Newtonsoft Json library to serialize objects into a JSON string.
+Uses Newtonsoft Json library to serialize objects into a JSON string. It is automatically downloaded during build/deployment.
 
 # Deployment
+
+*TODO*
