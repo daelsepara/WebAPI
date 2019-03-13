@@ -47,7 +47,7 @@ namespace PrescriptionsApp.Controllers
             OpenConnection();
 
             var cmd = new MySqlCommand(query, conn);
-                
+
             dataReader = cmd.ExecuteReader();
 
             return dataReader;
@@ -169,7 +169,7 @@ namespace PrescriptionsApp.Controllers
 
                     var cmd = new MySqlCommand("INSERT INTO Prescriptions(`ExpirationDate`, `ProductName`, `UsesLeft`, `Description`, `PatientId`) VALUES(@expDate, @productName, @usesLeft, @description, @patient)", conn);
 
-                    cmd.Parameters.AddWithValue("@expDate", value.ExpirationDate.ToString("yyyy-MM-dd HH:mm:ss"));
+                    cmd.Parameters.AddWithValue("@expDate", ((DateTime)value.ExpirationDate).ToString("yyyy-MM-dd HH:mm:ss"));
                     cmd.Parameters.AddWithValue("@productName", value.ProductName);
                     cmd.Parameters.AddWithValue("@usesLeft", value.UsesLeft);
                     cmd.Parameters.AddWithValue("@description", value.Description);
@@ -191,7 +191,17 @@ namespace PrescriptionsApp.Controllers
                 }
             }
 
-           return new HttpResponseMessage(HttpStatusCode.BadRequest);
+            return new HttpResponseMessage(HttpStatusCode.BadRequest);
+        }
+
+        private void AddParameter(ref int parameters, ref string query, string value)
+        {
+            if (parameters > 0)
+                query += ", ";
+
+            query += value;
+
+            parameters++;
         }
 
         // PUT: prescriptions/{id}
@@ -207,70 +217,53 @@ namespace PrescriptionsApp.Controllers
 
                 if (value.ExpirationDate != null)
                 {
-                    query += string.Format("ExpirationDate = '{0}'", value.ExpirationDate.ToString("yyyy-MM-dd HH:mm:ss"));
-                    parameters++;
+                    AddParameter(ref parameters, ref query, string.Format("ExpirationDate = '{0}'", ((DateTime)value.ExpirationDate).ToString("yyyy-MM-dd HH:mm:ss")));
                 }
 
                 if (!string.IsNullOrEmpty(value.ProductName))
                 {
-                    if (parameters > 0)
-                        query += ", ";
-
-                    query += string.Format("ProductName = '{0}'", value.ProductName);
-
-                    parameters++;
+                    AddParameter(ref parameters, ref query, string.Format("ProductName = '{0}'", value.ProductName));
                 }
 
-                if (value.UsesLeft >= 0)
+                if (value.UsesLeft != null)
                 {
-                    if (parameters > 0)
-                        query += ", ";
-
-                    query += string.Format("UsesLeft = {0}", value.UsesLeft);
-
-                    parameters++;
+                    AddParameter(ref parameters, ref query, string.Format("UsesLeft = {0}", value.UsesLeft));
                 }
 
                 if (!string.IsNullOrEmpty(value.Description))
                 {
-                    if (parameters > 0)
-                        query += ", ";
+                    AddParameter(ref parameters, ref query, string.Format("Description = '{0}'", value.Description));
+                }
 
-                    query += string.Format("Description = '{0}'", value.Description);
-
-                    parameters++;
+                if (value.IsActive != null)
+                {
+                    AddParameter(ref parameters, ref query, string.Format("IsActive = {0}", (bool)value.IsActive ? 1 : 0));
+                }
+                
+                if (!string.IsNullOrEmpty(value.PatientId))
+                {
+                    AddParameter(ref parameters, ref query, string.Format("PatientId = '{0}'", value.PatientId));
                 }
 
                 if (parameters > 0)
-                    query += ", ";
-
-                query += string.Format("IsActive = {0}", value.IsActive ? 1 : 0);
-
-                parameters++;
-
-                if (!string.IsNullOrEmpty(value.PatientId))
                 {
-                    if (parameters > 0)
-                        query += ", ";
+                    query += string.Format(" WHERE ID = {0}", id);
 
-                    query += string.Format("PatientId = '{0}'", value.PatientId);
+                    var affectedRows = ExecuteQuery(query);
 
-                    parameters++;
-                }
+                    Console.WriteLine(query);
+                    Console.WriteLine(JsonConvert.SerializeObject(value));
 
-                query += string.Format(" WHERE ID = {0}", id);
+                    conn.Close();
 
-                var affectedRows = ExecuteQuery(query);
-
-                conn.Close();
-
-                if (affectedRows > 0)
-                {
-                    return new HttpResponseMessage(HttpStatusCode.OK);
-                }
-                else
-                {
-                    return new HttpResponseMessage(HttpStatusCode.NotFound);
+                    if (affectedRows > 0)
+                    {
+                        return new HttpResponseMessage(HttpStatusCode.OK);
+                    }
+                    else
+                    {
+                        return new HttpResponseMessage(HttpStatusCode.NotFound);
+                    }
                 }
             }
 
