@@ -1,0 +1,12 @@
+DROP TABLE IF EXISTS `Prescriptions`;
+
+CREATE TABLE `Prescriptions` (
+  `Id` INT(11) NOT NULL AUTO_INCREMENT,
+  `ExpirationDate` DATETIME NOT NULL,
+  `ProductName` VARCHAR(500) NOT NULL,
+  `UsesLeft` INT(11) NOT NULL DEFAULT 0,
+  `Description` VARCHAR(2000) DEFAULT NULL,
+  `IsActive` tinyint(1) DEFAULT 1,
+  `PatientId` VARCHAR(500) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

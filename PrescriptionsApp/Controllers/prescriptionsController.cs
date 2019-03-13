@@ -14,7 +14,7 @@ namespace PrescriptionsApp.Controllers
     public class prescriptionsController : ApiController
     {
         MySqlConnection conn;
-        readonly string connectionString = "server=127.0.0.1;uid=root;pwd=dbadmin2k18;database=Prescriptions";
+        readonly string connectionString = "server=127.0.0.1;uid={username};pwd={password};database=Prescriptions";
 
         private HttpResponseMessage GenerateResponse(object obj, HttpStatusCode code)
         {
